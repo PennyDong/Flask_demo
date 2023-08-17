@@ -1,0 +1,62 @@
+git push heroku master
+
+使用heroku創建雲端網站網址
+https://dongmiller-python-flask-31c6a70a943d.herokuapp.com/
+
+
+路由Route
+
+通訊協定://主機名稱:負號/路徑?要求字串
+前端輸入不同路徑時，後端程式要決定對應的處理函式
+
+基本路由設定語法
+
+---
+@app.route("路徑")
+def 處理函式名稱(參數名稱):
+	處理函式的程式區塊
+---
+路徑/的路由範例
+@app.route("/")
+def index():
+	return "Home Page"
+
+路徑/data的路由範例
+@app.route("/data")
+def getData():
+	return "Data home"
+
+----
+動態路由設定語法 (一次支援多個路徑，並回應不同的訊息給前端)
+
+@app.route("/固定字首/<參數名稱>")
+def 處理函式名稱(參數名稱):
+	處理函式的程式區塊
+
+
+@app.route("/user/<name>")
+def getUser(name):
+	return "Hello"+name
+
+連線到http://127.0.0.1/user/john
+那麼name參數就會取得john
+----
+
+靜態檔案 ex:圖片 影片 html css js
+不執行程式
+直接將(檔案名稱)對應到(網址路徑)
+
+建立static資料夾和網址路徑
+   程式不需要做任何更動(Flask內建程式有提供)
+  操作方式:
+1.建立static資料夾
+2.將檔案放入static資料夾
+3.啟動伺服器
+4.前端使用/static/檔案名稱 連線取得檔案
+
+程式中建立Application物件時，透過參數指定
+Flask(
+	__name__,
+	static_folder="資料夾檔案"，
+	static_url_path="對應的網址路徑"
+)
