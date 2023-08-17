@@ -11,4 +11,6 @@ def test():
     return "Test Flask"
 
 if __name__=="__main__": #如果以主程式執行
-    app.run() #啟動伺服器
+
+
+    app.run(port=3000) #啟動伺服器,可透過prot 參數指定阜號
