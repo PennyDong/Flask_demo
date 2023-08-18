@@ -1,5 +1,7 @@
 from flask import Flask
 from flask import request
+from flask import redirect
+import json
 
 app=Flask(__name__,
           static_folder="static",
@@ -32,6 +34,35 @@ def getNumber():
 
 @app.route("/") #函式的裝飾(Decorator): 以函式為基礎，並提供附加功能
 def index():
+    lang=request.headers.get("accept-language")
+    if lang.startswith("en"):
+        return redirect("/en/")
+        
+    else:
+        return redirect("/zh/")
+        return "您好，Flask"
+
+@app.route("/en/")
+def index_english():
+    return json.dumps({
+        "status":"ok",
+        
+    })
+@app.route("/zh/")
+def index_chinese():
+    return json.dumps({
+        "status":"ok",
+        "text":"您好，歡迎"
+    },ensure_ascii=False)
+
+
+
+
+
+
+
+@app.route("/test")
+def test():
     print("請求方法",request.method)
     print("通訊協定",request.scheme)
     print("主機名稱",request.host)
@@ -41,18 +72,9 @@ def index():
     print("瀏覽器和作業系統",request.headers.get("user-agent"))
     print("語言偏好",request.headers.get("accept-language"))
     print("引薦網址",request.headers.get("referrer"))
-
-    lang=request.headers.get("accept-language")
-    if lang.startswith("en"):
-        return "Hello Flask"
-    else:
-        return "您好，Flask"
-
-@app.route("/test")
-def test():
     return "Test Flask"
 
 if __name__=="__main__": #如果以主程式執行
 
 
-    app.run(port=3000) #啟動伺服器,可透過prot 參數指定阜號
+    app.run(port=3000) #啟動伺服器,可透過port 參數指定阜號
