@@ -5,6 +5,31 @@ app=Flask(__name__,
           static_folder="static",
           static_url_path="/") #__name__ 代表目前執行的模組
 
+#建立路徑 /getSum 對應的處理函式
+#利用要求字串 (Query String)提供彈性 例:getSum?max=最大數字
+@app.route("/getSum")
+def getSum():
+    maxNumber=request.args.get("max",100) #預設值為100
+    maxNumber=int(maxNumber)
+    #在終端機裡顯示輸入的最大數字
+    print("最大數字",maxNumber)
+    result=0
+    for n in range(1,maxNumber+1):
+        result+=n
+    return "結果:"+str(result)
+
+@app.route("/getNumber")
+def getNumber():
+    maxNumber=request.args.get("max",1000)
+    maxNumber=int(maxNumber)
+    minNumber=request.args.get("min",10)
+    minNumber=int(minNumber)
+    print("最小值:",minNumber,"最大值:",maxNumber)
+    result=0
+    for n in range(minNumber,maxNumber+1):
+        result+=n
+    return "結果:"+str(result)    
+
 @app.route("/") #函式的裝飾(Decorator): 以函式為基礎，並提供附加功能
 def index():
     print("請求方法",request.method)
