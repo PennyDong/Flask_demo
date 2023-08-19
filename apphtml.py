@@ -12,4 +12,18 @@ def index():
 def page():
     return render_template("page.html")
 
+@app.route("/show")
+def show():
+    name=request.args.get("n", "")
+    return "歡迎來到 "+name+"個人網頁"
+
+@app.route("/Total")
+def Total():
+    maxNumber=request.args.get("max", "")
+    maxNumber=int(maxNumber)
+    result=0
+    for n in range(1,maxNumber):
+        result+=n
+    return render_template("result.html",data=result)
+
 app.run(port=3000)
