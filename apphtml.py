@@ -17,9 +17,11 @@ def show():
     name=request.args.get("n", "")
     return "歡迎來到 "+name+"個人網頁"
 
-@app.route("/Total")
+
+#使用POST連線
+@app.route("/Total", methods=["POST"])
 def Total():
-    maxNumber=request.args.get("max", "")
+    maxNumber=request.form["max"]
     maxNumber=int(maxNumber)
     result=0
     for n in range(1,maxNumber):
